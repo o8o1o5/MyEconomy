@@ -1,0 +1,6 @@
+name: MyEconomy
+version: '1.0-SNAPSHOT'
+main: dev.o8o1o5.myEconomy.MyEconomy
+api-version: '1.21'
+authors: [ o8o1o5 ]
+description: Nickname change plugin
