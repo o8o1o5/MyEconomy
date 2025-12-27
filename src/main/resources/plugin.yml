@@ -3,4 +3,10 @@ version: '1.0-SNAPSHOT'
 main: dev.o8o1o5.myEconomy.MyEconomy
 api-version: '1.21'
 authors: [ o8o1o5 ]
-description: Nickname change plugin
+description: Economy Plugin
+depend: [Vault, MyTextures]
+
+commands:
+  me:
+    description: "MyEconomy 메인 명령어입니다."
+    usage: /me balance
