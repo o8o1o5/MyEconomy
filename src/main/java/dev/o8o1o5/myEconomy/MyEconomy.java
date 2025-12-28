@@ -1,7 +1,9 @@
 package dev.o8o1o5.myEconomy;
 
 import dev.o8o1o5.myEconomy.command.EconomyCommand;
+import dev.o8o1o5.myEconomy.data.CoinManager;
 import dev.o8o1o5.myEconomy.data.DataManager;
+import dev.o8o1o5.myEconomy.item.EconomyItemManager;
 import dev.o8o1o5.myeconomy.vault.Economy_MyEconomy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.ServicePriority;
@@ -10,13 +12,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class MyEconomy extends JavaPlugin {
     private static Economy vaultEconomy = null;
     private DataManager dataManager;
+    private CoinManager coinManager;
+    private EconomyItemManager itemManager;
 
     @Override
     public void onEnable() {
         this.dataManager = new DataManager(this);
+        this.coinManager = new CoinManager();
+        this.itemManager = new EconomyItemManager();
 
         // Vault 연동 체크 및 등록
         setupVault();
+        itemManager.registerItems();
 
         // 명령어 등록 (getCommand가 null인지 체크하여 안전하게 등록)
         registerCommands();
@@ -53,5 +60,13 @@ public final class MyEconomy extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public CoinManager getCoinManager() {
+        return coinManager;
+    }
+
+    public EconomyItemManager getItemManager() {
+        return itemManager;
     }
 }

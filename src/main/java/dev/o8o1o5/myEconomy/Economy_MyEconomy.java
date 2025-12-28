@@ -124,9 +124,9 @@ public class Economy_MyEconomy extends AbstractEconomy {
     /* ------------------------------------------------------------------
        [6] 기타 필수 설정 및 은행 기능 (기본값)
        ------------------------------------------------------------------ */
-    @Override public String format(double amount) { return String.format("%,.0f Gold", amount); }
-    @Override public String currencyNamePlural() { return "Gold"; }
-    @Override public String currencyNameSingular() { return "Gold"; }
+    @Override public String format(double amount) { return String.format("%,.0f 셀", amount); }
+    @Override public String currencyNamePlural() { return "셀"; }
+    @Override public String currencyNameSingular() { return "셀"; }
     @Override public int fractionalDigits() { return 0; }
     @Override public boolean createPlayerAccount(String playerName) { return true; }
     @Override public boolean createPlayerAccount(OfflinePlayer player) { return true; }
