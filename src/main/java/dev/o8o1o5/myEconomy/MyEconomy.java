@@ -4,6 +4,7 @@ import dev.o8o1o5.myEconomy.command.EconomyCommand;
 import dev.o8o1o5.myEconomy.data.CoinManager;
 import dev.o8o1o5.myEconomy.data.DataManager;
 import dev.o8o1o5.myEconomy.item.EconomyItemManager;
+import dev.o8o1o5.myEconomy.listener.EconomyItemListener;
 import dev.o8o1o5.myeconomy.vault.Economy_MyEconomy;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.ServicePriority;
@@ -24,6 +25,8 @@ public final class MyEconomy extends JavaPlugin {
         // Vault 연동 체크 및 등록
         setupVault();
         itemManager.registerItems();
+
+        getServer().getPluginManager().registerEvents(new EconomyItemListener(this), this);
 
         // 명령어 등록 (getCommand가 null인지 체크하여 안전하게 등록)
         registerCommands();

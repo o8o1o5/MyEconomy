@@ -17,6 +17,10 @@ public class CoinManager {
         return coinPrices.getOrDefault(id, 0.0);
     }
 
+    public Map<String, Double> getPrices() {
+        return coinPrices;
+    }
+
     public void setPrice(String id, double newPrice) {
         coinPrices.put(id, newPrice);
     }

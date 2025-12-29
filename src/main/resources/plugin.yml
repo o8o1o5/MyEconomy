@@ -9,4 +9,4 @@ depend: [Vault, MyTextures]
 commands:
   me:
     description: "MyEconomy 메인 명령어입니다."
-    usage: /me balance
+    usage: /me
