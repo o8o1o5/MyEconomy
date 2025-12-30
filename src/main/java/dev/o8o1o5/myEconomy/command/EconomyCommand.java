@@ -3,7 +3,9 @@ package dev.o8o1o5.myEconomy.command;
 import dev.o8o1o5.myEconomy.MyEconomy;
 import dev.o8o1o5.myEconomy.data.CoinManager;
 import dev.o8o1o5.myEconomy.item.EconomyItemManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -144,7 +146,34 @@ public class EconomyCommand implements CommandExecutor, TabCompleter {
     // --- 관리자 로직 및 기타 메서드 ---
 
     private void handleAdminAction(Player player, String[] args, String type) {
-        // ... (기존 관리자 코드와 동일)
+
+        if (!player.isOp()) {
+            player.sendMessage(ChatColor.RED + "권한이 없습니다.");
+            return;
+        }
+
+        if (args.length < 3) {
+            player.sendMessage(ChatColor.YELLOW + "사용법: /me " + type + " <유저> <금액>");
+            return;
+        }
+
+        @SuppressWarnings("deprecation")
+        OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+
+        try {
+            double amount = Double.parseDouble(args[2]);
+            double current = plugin.getDataManager().getBalance(target.getUniqueId());
+
+            switch (type) {
+                case "give" -> plugin.getDataManager().setBalance(target.getUniqueId(), current + amount);
+                case "take" -> plugin.getDataManager().setBalance(target.getUniqueId(), Math.max(0, current - amount));
+                case "set" -> plugin.getDataManager().setBalance(target.getUniqueId(), amount);
+            }
+
+            player.sendMessage(ChatColor.GREEN + target.getName() + "님의 잔고를 업테이트 했습니다. (Type: " + type + ")");
+        } catch (NumberFormatException e) {
+            player.sendMessage(ChatColor.RED + "올바른 금액(숫자)를 입력해주세요.");
+        }
     }
 
     private void sendHelp(Player player) {
