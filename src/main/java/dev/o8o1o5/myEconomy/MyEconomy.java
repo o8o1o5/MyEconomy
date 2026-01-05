@@ -3,7 +3,6 @@ package dev.o8o1o5.myEconomy;
 import dev.o8o1o5.myEconomy.command.EconomyCommand;
 import dev.o8o1o5.myEconomy.data.CoinManager;
 import dev.o8o1o5.myEconomy.data.DataManager;
-import dev.o8o1o5.myEconomy.item.EconomyItemManager;
 import dev.o8o1o5.myEconomy.listener.EconomyItemListener;
 import dev.o8o1o5.myeconomy.vault.Economy_MyEconomy;
 import net.milkbowl.vault.economy.Economy;
@@ -14,22 +13,25 @@ public final class MyEconomy extends JavaPlugin {
     private static Economy vaultEconomy = null;
     private DataManager dataManager;
     private CoinManager coinManager;
-    private EconomyItemManager itemManager;
+
+    private Textures_MyEconomy itemManager;
 
     @Override
     public void onEnable() {
         this.dataManager = new DataManager(this);
         this.coinManager = new CoinManager();
-        this.itemManager = new EconomyItemManager();
+        this.itemManager = new Textures_MyEconomy();
 
         // Vault 연동 체크 및 등록
         setupVault();
-        itemManager.registerItems();
 
-        getServer().getPluginManager().registerEvents(new EconomyItemListener(this), this);
+        // 아이템 등록
+        itemManager.registerItems();
 
         // 명령어 등록 (getCommand가 null인지 체크하여 안전하게 등록)
         registerCommands();
+
+        getServer().getPluginManager().registerEvents(new EconomyItemListener(this), this);
 
         getLogger().info("MyEconomy 플러그인이 성공적으로 활성화되었습니다.");
     }
@@ -69,7 +71,7 @@ public final class MyEconomy extends JavaPlugin {
         return coinManager;
     }
 
-    public EconomyItemManager getItemManager() {
+    public Textures_MyEconomy getItemManager() {
         return itemManager;
     }
 }

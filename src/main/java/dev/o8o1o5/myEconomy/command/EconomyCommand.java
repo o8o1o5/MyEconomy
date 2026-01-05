@@ -2,7 +2,7 @@ package dev.o8o1o5.myEconomy.command;
 
 import dev.o8o1o5.myEconomy.MyEconomy;
 import dev.o8o1o5.myEconomy.data.CoinManager;
-import dev.o8o1o5.myEconomy.item.EconomyItemManager;
+import dev.o8o1o5.myEconomy.Textures_MyEconomy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -80,7 +80,7 @@ public class EconomyCommand implements CommandExecutor, TabCompleter {
         try {
             long amount = Long.parseLong(args[1]);
             CoinManager cm = plugin.getCoinManager();
-            double bronzePrice = cm.getPrice(EconomyItemManager.BRONZE);
+            double bronzePrice = cm.getPrice(Textures_MyEconomy.BRONZE_COIN);
 
             // 1. 인출 단위 체크
             if (amount < bronzePrice || amount % (long)bronzePrice != 0) {
@@ -96,9 +96,9 @@ public class EconomyCommand implements CommandExecutor, TabCompleter {
             }
 
             // 3. 주화별 개수 계산
-            double platinumPrice = cm.getPrice(EconomyItemManager.PLATINUM);
-            double goldPrice = cm.getPrice(EconomyItemManager.GOLD);
-            double silverPrice = cm.getPrice(EconomyItemManager.SILVER);
+            double platinumPrice = cm.getPrice(Textures_MyEconomy.PLATINUM_COIN);
+            double goldPrice = cm.getPrice(Textures_MyEconomy.GOLD_COIN);
+            double silverPrice = cm.getPrice(Textures_MyEconomy.SILVER_COIN);
 
             long remaining = amount;
 
@@ -116,13 +116,13 @@ public class EconomyCommand implements CommandExecutor, TabCompleter {
             // 4. 잔고 차감 및 아이템 지급
             plugin.getDataManager().setBalance(player.getUniqueId(), currentBalance - amount);
 
-            EconomyItemManager im = plugin.getItemManager();
+            Textures_MyEconomy im = plugin.getItemManager();
 
             // 주화 생성 및 지급 호출
-            giveCoin(player, im.createCoin(EconomyItemManager.PLATINUM, platinumCount));
-            giveCoin(player, im.createCoin(EconomyItemManager.GOLD, goldCount));
-            giveCoin(player, im.createCoin(EconomyItemManager.SILVER, silverCount));
-            giveCoin(player, im.createCoin(EconomyItemManager.BRONZE, bronzeCount));
+            giveCoin(player, im.createItem(Textures_MyEconomy.PLATINUM_COIN, platinumCount));
+            giveCoin(player, im.createItem(Textures_MyEconomy.GOLD_COIN, goldCount));
+            giveCoin(player, im.createItem(Textures_MyEconomy.SILVER_COIN, silverCount));
+            giveCoin(player, im.createItem(Textures_MyEconomy.BRONZE_COIN, bronzeCount));
 
             player.sendMessage(ChatColor.GREEN + String.format("%,d", amount) + " 셀을 인출하였습니다.");
 
